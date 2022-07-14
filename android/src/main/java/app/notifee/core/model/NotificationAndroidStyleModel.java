@@ -61,7 +61,8 @@ public class NotificationAndroidStyleModel {
         () -> {
           Person.Builder personBuilder = new Person.Builder();
 
-          personBuilder.setName(personBundle.getString("name"));
+          // To support custom styling in name
+          personBuilder.setName(TextUtils.fromHtml(personBundle.getString("name")));
 
           if (personBundle.containsKey("id")) {
             personBuilder.setKey(personBundle.getString("id"));
@@ -96,7 +97,9 @@ public class NotificationAndroidStyleModel {
             }
 
             if (personIconBitmap != null) {
-              personBuilder.setIcon(IconCompat.createWithAdaptiveBitmap(personIconBitmap));
+              // To make the person icon circular
+              personIconBitmap=ResourceUtils.getCircularBitmap(personIconBitmap);
+              personBuilder.setIcon(IconCompat.createWithBitmap(personIconBitmap));
             }
           }
 
